@@ -1,0 +1,9 @@
+server:
+  port: 8082
+
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    username: root
+#    url: jdbc:mysql://localhost:3306/BIBLIOTECA
+#    password: root
