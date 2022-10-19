@@ -1,0 +1,19 @@
+###
+GET http://localhost:8082/libros
+
+###
+POST http://localhost:8082/libros
+Content-Type: application/json
+
+{
+  "idLibro":"02",
+  "name":"test",
+  "author":"test",
+  "editorial":"test",
+  "numPages":"23",
+  "disponible":true,
+  "idUser":"0"
+}
+
+<> 2022-10-19T201722.500.json
+<> 2022-10-19T201653.500.json
