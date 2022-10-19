@@ -4,26 +4,25 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-@Entity
-@Table(name = "Libro", schema = "BIBLIOTECA")
+@Component
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Libro {
 
-    @Id
-    @GeneratedValue()
-    private Long idLibro;
+    private int idLibro;
     private String name;
     private String author;
     private String editorial;
     private int num_pages;
+    private boolean disponible;
+    private int idUser;
 
 }

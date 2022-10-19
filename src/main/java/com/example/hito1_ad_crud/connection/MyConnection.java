@@ -12,7 +12,6 @@ import java.sql.SQLException;
 @Data
 public class MyConnection {
 
-
     public void connect(String cadenaConexion){
 
         try {
@@ -21,6 +20,7 @@ public class MyConnection {
         } catch (SQLException e) {
             System.out.println("Imposible acceder a la base de datos");
         }
+
 
     }
 

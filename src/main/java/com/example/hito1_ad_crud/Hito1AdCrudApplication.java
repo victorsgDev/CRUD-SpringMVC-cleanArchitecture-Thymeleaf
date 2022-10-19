@@ -11,8 +11,6 @@ public class Hito1AdCrudApplication {
 	private static MyConnection connection = new MyConnection();
 
 
-
-
 	public static void main(String[] args) {
 
 		SpringApplication.run(Hito1AdCrudApplication.class, args);
