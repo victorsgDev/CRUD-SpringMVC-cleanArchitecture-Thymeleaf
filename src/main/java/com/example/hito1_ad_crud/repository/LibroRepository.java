@@ -21,8 +21,7 @@ public class LibroRepository implements Repository<Libro, Integer> {
     @Override
     public List<Libro> listAll() {
         rs = connectToLibros();
-        myConnection.listLibros(rs);
-        return null;
+        return myConnection.listLibros(rs);
     }
 
     @Override
@@ -33,18 +32,21 @@ public class LibroRepository implements Repository<Libro, Integer> {
     }
 
     @Override
-    public Libro updateById(Integer idObject) {
-        return null;
+    public Libro updateById(Integer idLibro, Libro libro) {
+        rs = connectToLibros();
+        return myConnection.updateLibroById(rs,idLibro, libro);
     }
 
     @Override
-    public Libro deleteById(Integer idObject) {
-        return null;
+    public void deleteById(Integer idLibro) {
+        rs = connectToLibros();
+        myConnection.deleteById(rs, idLibro);
     }
 
     @Override
-    public Libro listById(Integer idObject) {
-        return null;
+    public Libro listById(Integer idlibro) {
+        rs = connectToLibros();
+        return myConnection.listById(rs,idlibro);
     }
 
     public ResultSet connectToLibros() {

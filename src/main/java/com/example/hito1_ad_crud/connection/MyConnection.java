@@ -1,14 +1,20 @@
 package com.example.hito1_ad_crud.connection;
 
 import com.example.hito1_ad_crud.entity.Libro;
-import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
-@Data
 public class MyConnection {
+
+    private final Libro libro;
+
+    public MyConnection(Libro libro) {
+        this.libro = libro;
+    }
 
     public ResultSet connect(String cadenaConexion, String table) {
         Connection con;
@@ -44,41 +50,113 @@ public class MyConnection {
         }
     }
 
-    public void listLibros(ResultSet rs) {
+    public List<Libro> listLibros(ResultSet rs) {
+        List<Libro> listaLibros = new ArrayList<>();
         try {
             rs.beforeFirst();
             while (rs.next()) {
-                System.out.print(rs.getInt("idLibro"));
-                System.out.print(" - ");
-                System.out.print(rs.getString("name"));
-                System.out.print(" - ");
-                System.out.print(rs.getString("author"));
-                System.out.print(" - ");
-                System.out.print(rs.getString("editorial"));
-                System.out.print(" - ");
-                System.out.print(rs.getInt("numPages"));
-                System.out.print(" - ");
-                System.out.print(rs.getBoolean("disponible"));
-                System.out.print(" - ");
-                System.out.print(rs.getBoolean("idUser"));
-                System.out.print(" - ");
-                System.out.println();
+                libro.setIdLibro(rs.getInt("idLibro"));
+                libro.setName(rs.getString("name"));
+                libro.setAuthor(rs.getString("author"));
+                libro.setEditorial(rs.getString("editorial"));
+                libro.setNum_pages(rs.getInt("numPages"));
+                libro.setDisponible(rs.getBoolean("disponible"));
+                libro.setIdUser(rs.getInt("idUser"));
+                listaLibros.add(libro);
             }
+
         } catch (SQLException e) {
             System.out.println("Imposible listar los libros");
         }
-
+        return listaLibros;
     }
 
 
     public void insertLibro(ResultSet rs, Libro libro) {
         try {
             rs.moveToInsertRow();
-
+            rs.updateInt("idLibro", libro.getIdLibro());
+            rs.updateString("name", libro.getName());
+            rs.updateString("author", libro.getAuthor());
+            rs.updateString("editorial", libro.getEditorial());
+            rs.updateInt("numPages", libro.getNum_pages());
+            rs.updateBoolean("disponible", libro.isDisponible());
+            rs.updateInt("idUser", libro.getIdUser());
             rs.insertRow();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+    }
+
+    public Libro updateLibroById(ResultSet rs, Integer idLibro, Libro libro) {
+        boolean idEncontrado = false;
+
+        try {
+            rs.beforeFirst();
+            while (rs.next() && !idEncontrado) {
+                if (rs.getInt("idLibro") == idLibro) {
+                    idEncontrado = true;
+                    rs.updateString("name", libro.getName());
+                    rs.updateString("author", libro.getAuthor());
+                    rs.updateString("editorial", libro.getEditorial());
+                    rs.updateInt("numPages", libro.getNum_pages());
+                    rs.updateBoolean("disponible", libro.isDisponible());
+                    rs.updateInt("idUser", libro.getIdUser());
+                    rs.updateRow();
+                    System.out.println("Libro con id " + idLibro + " ha sido actualizado");
+                    listById(rs,idLibro);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return libro;
+    }
+
+    public Libro listById(ResultSet rs, Integer idLibro) {
+        boolean idEncontrado = false;
+
+        try {
+            rs.beforeFirst();
+            while (rs.next() && !idEncontrado) {
+                if (rs.getInt("idLibro") == idLibro) {
+                    idEncontrado = true;
+
+                    libro.setIdLibro(rs.getInt("idLibro"));
+                    libro.setName(rs.getString("name"));
+                    libro.setAuthor(rs.getString("author"));
+                    libro.setEditorial(rs.getString("editorial"));
+                    libro.setNum_pages(rs.getInt("numPages"));
+                    libro.setDisponible(rs.getBoolean("disponible"));
+                    libro.setIdUser(rs.getInt("idUser"));
+
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return libro;
+    }
+
+    public void deleteById(ResultSet rs, Integer idLibro) {
+
+        boolean idEncontrado = false;
+
+        try {
+            rs.beforeFirst();
+            while (rs.next() && !idEncontrado) {
+                if (rs.getInt("idLibro") == idLibro) {
+                    idEncontrado = true;
+                    rs.deleteRow();
+                    System.out.println("Libro con id "+idLibro+" ha sido eliminado");
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
 
     }
 }

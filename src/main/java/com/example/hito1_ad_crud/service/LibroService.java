@@ -27,6 +27,10 @@ public class LibroService extends LibroRepository {
     public Libro save(Libro libro) {
         return libroRepository.save(libro);
     }
+
+    public Libro listById(Integer idLibro) {
+        return libroRepository.listById(idLibro);
+    }
 //
 //    @Override
 //    public Libro updateById(Integer idObject) {

@@ -1,19 +1,46 @@
-###
+### listAll Libros
 GET http://localhost:8082/libros
 
-###
+### Save Libro
 POST http://localhost:8082/libros
 Content-Type: application/json
 
 {
-  "idLibro":"02",
-  "name":"test",
-  "author":"test",
-  "editorial":"test",
-  "numPages":"23",
-  "disponible":true,
-  "idUser":"0"
+  "idLibro": 3,
+  "name": "test",
+  "author": "test",
+  "editorial": "test",
+  "numPages": 342,
+  "disponible": true,
+  "idUser": 1
 }
 
-<> 2022-10-19T201722.500.json
-<> 2022-10-19T201653.500.json
+### Update Libro
+PUT http://localhost:8082/libros/3
+Content-Type: application/json
+
+{
+  "idLibro": 3,
+  "name": "testUpdate",
+  "author": "testUpdate",
+  "editorial": "testUpdate",
+  "numPages": 342,
+  "disponible": true,
+  "idUser": 1
+}
+
+### List By ID
+GET http://localhost:8082/libros/1
+Content-Type: application/json
+
+{
+  "idLibro": 1
+}
+
+### Delete Libro
+DELETE http://localhost:8082/libros/3
+Content-Type: application/json
+
+{
+"idLibro": 3
+}
