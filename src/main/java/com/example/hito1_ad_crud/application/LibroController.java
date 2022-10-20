@@ -1,7 +1,8 @@
-package com.example.hito1_ad_crud.controller;
+package com.example.hito1_ad_crud.application;
 
-import com.example.hito1_ad_crud.entity.Libro;
 import com.example.hito1_ad_crud.service.LibroService;
+import com.example.hito1_ad_crud.domain.Libro;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
