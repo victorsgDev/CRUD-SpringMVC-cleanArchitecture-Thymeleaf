@@ -1,49 +1,56 @@
 package com.example.hito1_ad_crud.service;
 
-import com.example.hito1_ad_crud.connection.MyConnection;
-import com.example.hito1_ad_crud.entity.Libro;
-import com.example.hito1_ad_crud.repository.LibroRepository;
-import org.springframework.stereotype.Service;
+import com.example.hito1_ad_crud.infrastructure.MyConnection;
+import com.example.hito1_ad_crud.domain.Libro;
 
+import java.sql.ResultSet;
 import java.util.List;
-@Service
-public class LibroService extends LibroRepository {
 
-    private final LibroRepository libroRepository;
+
+@org.springframework.stereotype.Repository
+public class LibroService implements Repository<Libro, Integer> {
+
     private final MyConnection myConnection;
+    private ResultSet rs;
 
-    public LibroService(LibroRepository libroRepository, MyConnection myConnection) {
-        super(myConnection);
-        this.libroRepository = libroRepository;
+    public LibroService(MyConnection myConnection) {
         this.myConnection = myConnection;
     }
 
+
     @Override
     public List<Libro> listAll() {
-        return libroRepository.listAll();
+        rs = connectToLibros();
+        return myConnection.listLibros(rs);
     }
 
     @Override
     public Libro save(Libro libro) {
-        return libroRepository.save(libro);
+        rs = connectToLibros();
+        myConnection.insertLibro(rs, libro);
+        return null;
     }
 
-    public Libro listById(Integer idLibro) {
-        return libroRepository.listById(idLibro);
+    @Override
+    public Libro updateById(Integer idLibro, Libro libro) {
+        rs = connectToLibros();
+        return myConnection.updateLibroById(rs,idLibro, libro);
     }
-//
-//    @Override
-//    public Libro updateById(Integer idObject) {
-//        return libroRepository.updateById();
-//    }
-//
-//    @Override
-//    public Libro deleteById(Integer idObject) {
-//        return libroRepository.deleteById();
-//    }
-//
-//    @Override
-//    public Libro listById(Integer idObject) {
-//        return libroRepository.listById();
-//    }
+
+    @Override
+    public void deleteById(Integer idLibro) {
+        rs = connectToLibros();
+        myConnection.deleteById(rs, idLibro);
+    }
+
+    @Override
+    public Libro listById(Integer idlibro) {
+        rs = connectToLibros();
+        return myConnection.listById(rs,idlibro);
+    }
+
+    public ResultSet connectToLibros() {
+        this.rs = myConnection.connect("jdbc:mysql://localhost:3306/BIBLIOTECA", "LIBRO");
+        return rs;
+    }
 }

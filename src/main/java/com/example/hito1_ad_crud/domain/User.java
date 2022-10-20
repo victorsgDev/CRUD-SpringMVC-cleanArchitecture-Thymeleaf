@@ -1,23 +1,20 @@
-package com.example.hito1_ad_crud.entity;
+package com.example.hito1_ad_crud.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
-@Component
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Libro {
+@Component
+public class User {
 
-    private int idLibro;
-    private String name;
-    private String author;
-    private String editorial;
-    private int num_pages;
-    private boolean disponible;
     private int idUser;
+    private String name;
+    private String nif;
 
 }

@@ -1,6 +1,7 @@
-package com.example.hito1_ad_crud.connection;
+package com.example.hito1_ad_crud.infrastructure;
 
-import com.example.hito1_ad_crud.entity.Libro;
+import com.example.hito1_ad_crud.domain.Libro;
+import com.example.hito1_ad_crud.service.Repository;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
@@ -30,7 +31,7 @@ public class MyConnection {
 
     }
 
-    public ResultSet executeQuery(Connection con, String table) {
+    private ResultSet executeQuery(Connection con, String table) {
         try {
             Statement statement = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
