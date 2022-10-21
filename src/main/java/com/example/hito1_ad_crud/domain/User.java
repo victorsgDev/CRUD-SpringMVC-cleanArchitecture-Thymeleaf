@@ -1,4 +1,4 @@
-package com.example.hito1_ad_crud.entity;
+package com.example.hito1_ad_crud.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

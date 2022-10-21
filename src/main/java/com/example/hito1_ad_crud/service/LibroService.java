@@ -1,8 +1,7 @@
 package com.example.hito1_ad_crud.service;
 
-import com.example.hito1_ad_crud.connection.MyConnection;
-import com.example.hito1_ad_crud.entity.Libro;
-import com.example.hito1_ad_crud.repository.LibroRepository;
+import com.example.hito1_ad_crud.infrastructure.MyConnection;
+import com.example.hito1_ad_crud.domain.Libro;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,8 +18,8 @@ public class LibroService extends LibroRepository {
     }
 
     @Override
-    public List<Libro> listAll() {
-        return libroRepository.listAll();
+    public List<Libro> listAll(String tabla) {
+        return libroRepository.listAll(tabla);
     }
 
     @Override
@@ -28,22 +27,6 @@ public class LibroService extends LibroRepository {
         return libroRepository.save(libro);
     }
 
-    public Libro listById(Integer idLibro) {
-        return libroRepository.listById(idLibro);
-    }
-//
-//    @Override
-//    public Libro updateById(Integer idObject) {
-//        return libroRepository.updateById();
-//    }
-//
-//    @Override
-//    public Libro deleteById(Integer idObject) {
-//        return libroRepository.deleteById();
-//    }
-//
-//    @Override
-//    public Libro listById(Integer idObject) {
-//        return libroRepository.listById();
-//    }
+
+
 }

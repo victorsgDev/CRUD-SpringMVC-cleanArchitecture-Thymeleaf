@@ -42,5 +42,5 @@ DELETE http://localhost:8082/libros/3
 Content-Type: application/json
 
 {
-"idLibro": 3
+  "idLibro": 3
 }

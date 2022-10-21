@@ -1,6 +1,6 @@
-package com.example.hito1_ad_crud.controller;
+package com.example.hito1_ad_crud.application;
 
-import com.example.hito1_ad_crud.entity.Libro;
+import com.example.hito1_ad_crud.domain.Libro;
 import com.example.hito1_ad_crud.service.LibroService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +17,8 @@ public class LibroController {
     }
 
     @GetMapping()
-    public List<Libro> listAll(){
-        return libroService.listAll();
+    public List<Libro> listAll(String tabla){
+        return libroService.listAll(tabla);
     }
     @GetMapping("/{id}")
     public Libro listById(@PathVariable("id") Integer idLibro){

@@ -1,4 +1,4 @@
-package com.example.hito1_ad_crud.entity;
+package com.example.hito1_ad_crud.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Libro {
+public class Libro extends Object{
 
-    private int idLibro;
+    private Integer idLibro;
     private String name;
     private String author;
     private String editorial;
