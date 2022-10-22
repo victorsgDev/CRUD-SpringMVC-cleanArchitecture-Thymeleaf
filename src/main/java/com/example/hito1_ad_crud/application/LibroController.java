@@ -12,31 +12,33 @@ public class LibroController {
 
     private final LibroService libroService;
 
+    //DI libroService
     public LibroController(LibroService libroService) {
         this.libroService = libroService;
     }
 
     @GetMapping()
-    public List<Libro> listAll(String tabla){
+    public List<Object> listAll(String tabla) {
         return libroService.listAll(tabla);
     }
+
     @GetMapping("/{id}")
-    public Libro listById(@PathVariable("id") Integer idLibro){
-        return libroService.listById(idLibro);
+    public Libro listById(@PathVariable("id") Integer idLibro) {
+        return (Libro) libroService.listById(idLibro);
     }
 
     @PostMapping()
-    public Libro save(@RequestBody Libro libro){
-        return libroService.save(libro);
+    public Libro save(@RequestBody Libro libro) {
+        return (Libro) libroService.save(libro);
     }
 
     @PutMapping("{id}")
-    public Libro updateById(@PathVariable("id") Integer idLibro, @RequestBody Libro libro){
-        return libroService.updateById(idLibro, libro);
+    public Libro updateById(@PathVariable("id") Integer idLibro, @RequestBody Libro libro) {
+        return (Libro) libroService.updateById(idLibro, libro);
     }
 
     @DeleteMapping("{id}")
-    public void deleteById(@PathVariable("id") Integer idLibro){
+    public void deleteById(@PathVariable("id") Integer idLibro) {
         libroService.deleteById(idLibro);
     }
 

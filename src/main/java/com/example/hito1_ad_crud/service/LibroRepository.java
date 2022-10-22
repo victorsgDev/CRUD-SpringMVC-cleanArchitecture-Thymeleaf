@@ -1,11 +1,8 @@
 package com.example.hito1_ad_crud.service;
 
-import com.example.hito1_ad_crud.infrastructure.MyConnection;
 import com.example.hito1_ad_crud.domain.Libro;
+import com.example.hito1_ad_crud.infrastructure.EntityManager;
 
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,41 +10,52 @@ import java.util.stream.Collectors;
 @org.springframework.stereotype.Repository
 public class LibroRepository implements Repository<Libro, Integer> {
 
-    private final MyConnection myConnection;
-    // private ResultSet rs = connectToLibros();
+    // DI EntityManager
+    private final EntityManager entityManager;
+    private String cadena_conexion = "jdbc:mysql://localhost:3306/BIBLIOTECA";
+    private String table = "LIBRO";
 
-    public LibroRepository(MyConnection myConnection) {
-        this.myConnection = myConnection;
+    public LibroRepository(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
 
     @Override
     public List<Libro> listAll(String tabla) {
-        myConnection.connect("jdbc:mysql://localhost:3306/BIBLIOTECA", "LIBRO");
-        var res = myConnection.listAll("Libro");
+        connect();
+        var res = entityManager.listAll("Libro");
         return res.stream()
                 .map(Libro.class::cast)
                 .collect(Collectors.toList());
     }
 
     @Override
+    public Libro listById(Integer idObject) {
+        connect();
+        return (Libro) entityManager.listById(idObject);
+    }
+
+    @Override
     public Libro save(Libro object) {
-        return null;
+        connect();
+        return (Libro) entityManager.save(object);
     }
 
     @Override
     public Libro updateById(Integer idObject, Libro object) {
-        return null;
+        connect();
+        return (Libro) entityManager.updateById(idObject,object);
     }
 
     @Override
     public void deleteById(Integer idObject) {
-
+        connect();
+        entityManager.deleteById(idObject);
     }
 
-    @Override
-    public Libro listById(Integer idObject) {
-        return null;
+    public void connect(){
+        entityManager.connect(cadena_conexion,table);
     }
+
 
 }

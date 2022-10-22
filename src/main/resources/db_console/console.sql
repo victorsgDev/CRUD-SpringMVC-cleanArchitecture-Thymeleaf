@@ -21,8 +21,10 @@ CREATE TABLE LIBRO
     foreign key (idUser) references USER(idUser)
 );
 
-INSERT INTO USER VALUES (1,'Sin Usuario','-');
-INSERT INTO USER VALUES (2,'Test','012345678L');
+INSERT INTO USER VALUES (10,'Sin Usuario','-');
+INSERT INTO USER VALUES (11,'Test','012345678L');
 
-INSERT INTO LIBRO VALUES (01,'Don Quijote de la Mancha','Miguel de Cervantes','Vicens vives',115,true,1);
-INSERT INTO LIBRO VALUES (02,'TODO VA A MEJORAR','ALMUDENA GRANDES','TUSQUETS EDITORES',496,false,2);
+
+
+INSERT INTO LIBRO VALUES (20,'Don Quijote de la Mancha','Miguel de Cervantes','Vicens vives',115,true,10);
+INSERT INTO LIBRO VALUES (21,'TODO VA A MEJORAR','ALMUDENA GRANDES','TUSQUETS EDITORES',496,false,11);
