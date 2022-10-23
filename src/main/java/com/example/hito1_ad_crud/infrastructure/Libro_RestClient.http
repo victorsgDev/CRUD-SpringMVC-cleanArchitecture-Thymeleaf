@@ -15,7 +15,7 @@ Content-Type: application/json
   "idUser": 10
 }
 
-### Update Libro
+### Update Libro By Id
 PUT http://localhost:8082/libros/22
 Content-Type: application/json
 
@@ -29,7 +29,7 @@ Content-Type: application/json
   "idUser": 10
 }
 
-### List By ID
+### List Libro By ID
 GET http://localhost:8082/libros/22
 Content-Type: application/json
 
@@ -37,7 +37,7 @@ Content-Type: application/json
   "idLibro": 22
 }
 
-### Delete Libro
+### Delete Libro By Id
 DELETE http://localhost:8082/libros/22
 Content-Type: application/json
 

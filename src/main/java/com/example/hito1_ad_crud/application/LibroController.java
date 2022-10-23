@@ -8,38 +8,45 @@ import java.util.List;
 
 @RestController()
 @RequestMapping("/libros")
-public class LibroController {
+public class LibroController implements Controller {
 
     private final LibroService libroService;
+    private String table = "LIBRO";
 
     //DI libroService
     public LibroController(LibroService libroService) {
         this.libroService = libroService;
     }
 
-    @GetMapping()
-    public List<Object> listAll(String tabla) {
-        return libroService.listAll(tabla);
+    @Override
+    @GetMapping
+    public List<Object> listAll() {
+        return libroService.listAll(table);
     }
 
+    @Override
     @GetMapping("/{id}")
-    public Libro listById(@PathVariable("id") Integer idLibro) {
-        return (Libro) libroService.listById(idLibro);
+    public Object listById(@PathVariable("id") Integer idLibro) {
+        return libroService.listById(idLibro);
     }
 
-    @PostMapping()
-    public Libro save(@RequestBody Libro libro) {
-        return (Libro) libroService.save(libro);
+    @Override
+    @PostMapping
+    public Object save(Object libro) {
+        return libroService.save(libro);
     }
 
+    @Override
     @PutMapping("{id}")
-    public Libro updateById(@PathVariable("id") Integer idLibro, @RequestBody Libro libro) {
-        return (Libro) libroService.updateById(idLibro, libro);
+    public Object updateById(@PathVariable("id") Integer idLibro, @RequestBody Object libro) {
+        return libroService.updateById(idLibro, libro);
     }
 
+    @Override
     @DeleteMapping("{id}")
     public void deleteById(@PathVariable("id") Integer idLibro) {
         libroService.deleteById(idLibro);
     }
+
 
 }

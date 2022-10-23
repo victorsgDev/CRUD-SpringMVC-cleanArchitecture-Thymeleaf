@@ -19,9 +19,9 @@ public class EntityManager implements Repository<Object, Integer> {
     private User user;
     private ResultSet rs;
 
+    private Connection con;
 
     public ResultSet connect(String cadenaConexion, String table) {
-        Connection con;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection(cadenaConexion, "root", "root");
@@ -45,7 +45,7 @@ public class EntityManager implements Repository<Object, Integer> {
                 this.rs = statement.executeQuery("SELECT * FROM USER");
                 return rs;
             } else {
-                System.out.println(table);
+                closeConnection();
                 return null;
             }
 
@@ -77,13 +77,29 @@ public class EntityManager implements Repository<Object, Integer> {
             } catch (SQLException e) {
                 System.out.println("Imposible listar los libros");
             }
-        } else if (tabla.equals(user.getClass().getName())) {
+        } else if (tabla.equals("User")) {
+            lista = new ArrayList<>();
+            try {
+                rs.beforeFirst();
+                while (rs.next()) {
+                    // TODO REVISAR NEW :
+                    User user = new User();
+
+                    user.setIdUser(rs.getInt("idUser"));
+                    user.setName(rs.getString("name"));
+                    user.setNif(rs.getString("nif"));
+                    lista.add(user);
+                }
+            } catch (SQLException e) {
+                System.out.println("Imposible listar los usuarios");
+            }
+        } else
             lista = null;
-        } else {
-            lista = null;
-        }
+
+        closeConnection();
         return lista;
     }
+
 
     @Override
     public Object listById(Integer idObject) {
@@ -109,12 +125,32 @@ public class EntityManager implements Repository<Object, Integer> {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+            closeConnection();
             return libro;
         } else if (String.valueOf(idObject).charAt(0) == '1') {
-            // TODO USER
+            try {
+                rs.beforeFirst();
+                while (rs.next() && !idEncontrado) {
+                    user.setIdUser(idObject);
+                    if (rs.getInt("idUser") == user.getIdUser()) {
+                        idEncontrado = true;
+
+                        user.setIdUser(rs.getInt("idUser"));
+                        user.setName(rs.getString("name"));
+                        user.setNif(rs.getString("nif"));
+
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            closeConnection();
             return user;
-        } else
+        } else {
+            closeConnection();
             return null;
+        }
     }
 
     @Override
@@ -132,28 +168,29 @@ public class EntityManager implements Repository<Object, Integer> {
                 rs.updateBoolean("disponible", libro.isDisponible());
                 rs.updateInt("idUser", libro.getIdUser());
                 rs.insertRow();
+
+                closeConnection();
                 return libro;
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         } else if (object.getClass() == User.class) {
-            // TODO PENDIENTE...!!!!!!!!!!!!!!!!!!
+
             user = (User) object;
             try {
                 rs.moveToInsertRow();
-                rs.updateInt("idLibro", user.getIdUser());
+                rs.updateInt("idUser", user.getIdUser());
                 rs.updateString("name", user.getName());
-                rs.updateString("author", libro.getAuthor());
-                rs.updateString("editorial", libro.getEditorial());
-                rs.updateInt("numPages", libro.getNum_pages());
-                rs.updateBoolean("disponible", libro.isDisponible());
-                rs.updateInt("idUser", libro.getIdUser());
+                rs.updateString("nif", user.getNif());
                 rs.insertRow();
+
+                closeConnection();
                 return user;
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
+        closeConnection();
         return null;
     }
 
@@ -182,10 +219,33 @@ public class EntityManager implements Repository<Object, Integer> {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+            closeConnection();
             return libro;
+
         } else if (String.valueOf(idObject).charAt(0) == '1') {
-            //Todo user
+            try {
+                user = (User) object;
+                user.setIdUser(idObject);
+                rs.beforeFirst();
+                while (rs.next() && !idEncontrado) {
+                    if (rs.getInt("idUser") == idObject) {
+                        idEncontrado = true;
+                        rs.updateString("name", user.getName());
+                        rs.updateString("nif", user.getNif());
+
+                        rs.updateRow();
+                        System.out.println("User con id " + idObject + " ha sido actualizado");
+                        listById(idObject);
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            closeConnection();
+            return user;
         }
+
+        closeConnection();
         return null;
     }
 
@@ -208,15 +268,35 @@ public class EntityManager implements Repository<Object, Integer> {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-        } else if (String.valueOf(idObject).charAt(0) == '1') {
 
-            listAll("USER");
-        }
-        else {
+        } else if (String.valueOf(idObject).charAt(0) == '1') {
+            try {
+                rs.beforeFirst();
+                while (rs.next() && !idEncontrado) {
+                    user.setIdUser(idObject);
+                    if (rs.getInt("idUser") == user.getIdUser()) {
+                        idEncontrado = true;
+                        rs.deleteRow();
+                        System.out.println("User con id " + idObject + " ha sido eliminado");
+                    }
+                }
+                listAll("USER");
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
             System.out.println("ID no encontrado");
         }
-
+        closeConnection();
     }
 
+
+    private void closeConnection() {
+        try {
+            con.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

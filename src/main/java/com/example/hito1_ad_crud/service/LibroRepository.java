@@ -23,7 +23,7 @@ public class LibroRepository implements Repository<Libro, Integer> {
     @Override
     public List<Libro> listAll(String tabla) {
         connect();
-        var res = entityManager.listAll("Libro");
+        var res = entityManager.listAll(tabla);
         return res.stream()
                 .map(Libro.class::cast)
                 .collect(Collectors.toList());
