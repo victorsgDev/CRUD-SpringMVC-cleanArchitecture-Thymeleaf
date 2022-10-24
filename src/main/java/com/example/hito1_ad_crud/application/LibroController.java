@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController()
 @RequestMapping("/libros")
-public class LibroController implements Controller {
+public class LibroController {
 
     private final LibroService libroService;
     private String table = "LIBRO";
@@ -18,31 +18,28 @@ public class LibroController implements Controller {
         this.libroService = libroService;
     }
 
-    @Override
     @GetMapping
     public List<Object> listAll() {
         return libroService.listAll(table);
     }
 
-    @Override
     @GetMapping("/{id}")
     public Object listById(@PathVariable("id") Integer idLibro) {
         return libroService.listById(idLibro);
     }
 
-    @Override
     @PostMapping
-    public Object save(Object libro) {
+    public Libro save(@RequestBody Libro libro) {
         return libroService.save(libro);
     }
 
-    @Override
+
     @PutMapping("{id}")
-    public Object updateById(@PathVariable("id") Integer idLibro, @RequestBody Object libro) {
-        return libroService.updateById(idLibro, libro);
+    public Libro updateById(@PathVariable("id") Integer idLibro, @RequestBody Libro libro) {
+        return (Libro) libroService.updateById(idLibro, libro);
     }
 
-    @Override
+
     @DeleteMapping("{id}")
     public void deleteById(@PathVariable("id") Integer idLibro) {
         libroService.deleteById(idLibro);

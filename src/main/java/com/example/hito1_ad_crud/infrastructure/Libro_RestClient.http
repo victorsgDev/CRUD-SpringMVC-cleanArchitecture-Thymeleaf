@@ -30,11 +30,11 @@ Content-Type: application/json
 }
 
 ### List Libro By ID
-GET http://localhost:8082/libros/22
+GET http://localhost:8082/libros/21
 Content-Type: application/json
 
 {
-  "idLibro": 22
+  "idLibro": 21
 }
 
 ### Delete Libro By Id

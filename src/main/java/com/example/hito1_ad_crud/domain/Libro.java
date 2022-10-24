@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Libro extends Object{
+public class Libro{
 
     private Integer idLibro;
     private String name;

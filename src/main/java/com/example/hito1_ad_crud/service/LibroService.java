@@ -27,7 +27,7 @@ public class LibroService implements com.example.hito1_ad_crud.service.Service {
     }
 
     @Override
-    public Object save(Object libro) {
+    public Libro save(Object libro) {
         return libroRepository.save((Libro) libro);
     }
 

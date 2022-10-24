@@ -45,7 +45,7 @@ public class EntityManager implements Repository<Object, Integer> {
                 this.rs = statement.executeQuery("SELECT * FROM USER");
                 return rs;
             } else {
-                closeConnection();
+
                 return null;
             }
 
@@ -57,7 +57,7 @@ public class EntityManager implements Repository<Object, Integer> {
     @Override
     public List<Object> listAll(String tabla) {
         List<Object> lista;
-        if (tabla.equals("Libro")) {
+        if (tabla.equalsIgnoreCase("libro")) {
             lista = new ArrayList<>();
             try {
                 rs.beforeFirst();
@@ -77,7 +77,7 @@ public class EntityManager implements Repository<Object, Integer> {
             } catch (SQLException e) {
                 System.out.println("Imposible listar los libros");
             }
-        } else if (tabla.equals("User")) {
+        } else if (tabla.equalsIgnoreCase("user")) {
             lista = new ArrayList<>();
             try {
                 rs.beforeFirst();
@@ -93,10 +93,10 @@ public class EntityManager implements Repository<Object, Integer> {
             } catch (SQLException e) {
                 System.out.println("Imposible listar los usuarios");
             }
-        } else
+        } else {
             lista = null;
+        }
 
-        closeConnection();
         return lista;
     }
 
@@ -125,7 +125,7 @@ public class EntityManager implements Repository<Object, Integer> {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            closeConnection();
+
             return libro;
         } else if (String.valueOf(idObject).charAt(0) == '1') {
             try {
@@ -144,13 +144,10 @@ public class EntityManager implements Repository<Object, Integer> {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-
-            closeConnection();
             return user;
-        } else {
-            closeConnection();
+
+        } else
             return null;
-        }
     }
 
     @Override
@@ -158,7 +155,6 @@ public class EntityManager implements Repository<Object, Integer> {
         if (object.getClass() == Libro.class) {
             libro = (Libro) object;
             try {
-
                 rs.moveToInsertRow();
                 rs.updateInt("idLibro", libro.getIdLibro());
                 rs.updateString("name", libro.getName());
@@ -169,28 +165,26 @@ public class EntityManager implements Repository<Object, Integer> {
                 rs.updateInt("idUser", libro.getIdUser());
                 rs.insertRow();
 
-                closeConnection();
                 return libro;
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         } else if (object.getClass() == User.class) {
-
-            user = (User) object;
             try {
+                user = (User) object;
                 rs.moveToInsertRow();
                 rs.updateInt("idUser", user.getIdUser());
                 rs.updateString("name", user.getName());
                 rs.updateString("nif", user.getNif());
                 rs.insertRow();
 
-                closeConnection();
                 return user;
+
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
-        closeConnection();
+
         return null;
     }
 
@@ -198,8 +192,8 @@ public class EntityManager implements Repository<Object, Integer> {
     public Object updateById(Integer idObject, Object object) {
         boolean idEncontrado = false;
         if (String.valueOf(idObject).charAt(0) == '2') {
+            libro = (Libro) object;
             try {
-                libro = (Libro) object;
                 libro.setIdLibro(idObject);
                 rs.beforeFirst();
                 while (rs.next() && !idEncontrado) {
@@ -219,8 +213,8 @@ public class EntityManager implements Repository<Object, Integer> {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            closeConnection();
             return libro;
+
 
         } else if (String.valueOf(idObject).charAt(0) == '1') {
             try {
@@ -241,11 +235,10 @@ public class EntityManager implements Repository<Object, Integer> {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            closeConnection();
+
             return user;
         }
 
-        closeConnection();
         return null;
     }
 
@@ -286,16 +279,6 @@ public class EntityManager implements Repository<Object, Integer> {
             }
         } else {
             System.out.println("ID no encontrado");
-        }
-        closeConnection();
-    }
-
-
-    private void closeConnection() {
-        try {
-            con.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
 
