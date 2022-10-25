@@ -13,6 +13,20 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
 
+  postgres:
+    image: postgres:latest
+    restart: always
+    container_name: postgres
+    environment:
+      POSTGRES_USER: 'root'
+      POSTGRES_PASSWORD: root
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+
 volumes:
   mysql_data:
+    driver: local
+  postgresql_data:
     driver: local
