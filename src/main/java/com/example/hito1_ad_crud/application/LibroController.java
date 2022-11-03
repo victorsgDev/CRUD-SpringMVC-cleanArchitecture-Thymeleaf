@@ -2,12 +2,15 @@ package com.example.hito1_ad_crud.application;
 
 import com.example.hito1_ad_crud.domain.Libro;
 import com.example.hito1_ad_crud.service.LibroService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-@RestController()
-@RequestMapping("/libros")
+@Controller
+//@RequestMapping()
 public class LibroController {
 
     private final LibroService libroService;
@@ -18,9 +21,16 @@ public class LibroController {
         this.libroService = libroService;
     }
 
-    @GetMapping
-    public List<Object> listAll() {
-        return libroService.listAll(table);
+    @GetMapping("/libros")
+    public String listAll(Model model) {
+        var listObject = libroService.listAll(table);
+        List<Libro> res= listObject.stream()
+                .map(Libro.class::cast)
+                .collect(Collectors.toList());
+
+        model.addAttribute("libros",
+                res);
+        return "libros";
     }
 
     @GetMapping("/{id}")
