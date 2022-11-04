@@ -4,11 +4,24 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bibliteca</title>
+    <title>Biblioteca</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 </head>
 <body>
+
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+        <a class="navbar-brand">Control de Biblioteca</a>
+
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/libros}">Control de libros</a>
+            </li>
+        </ul>
+    </div>
+    </nav>
+
 <div class="container">
     <div class="row">
         <h1>Lista de Libros</h1>
@@ -26,14 +39,14 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each=" libro : ${libros}">
+        <tr th:each=" libro : ${libros}">
                 <td th:text="${libro.idLibro}">ID_LIBRO</td>
-                <td>NOMBRE</td>
-                <td>AUTOR</td>
-                <td>EDITORIAL</td>
-                <td>NÚMERO_PÁGINAS</td>
-                <td>¿DISPONIBLE?</td>
-                <td>ID_USUARIO</td>
+                <td th:text="${libro.name}">NOMBRE</td>
+                <td th:text="${libro.author}">AUTOR</td>
+                <td th:text="${libro.editorial}">EDITORIAL</td>
+                <td th:text="${libro.num_pages}">NÚMERO_PÁGINAS</td>
+                <td th:text="${libro.disponible}">¿DISPONIBLE?</td>
+                <td th:text="${libro.idUser}">ID_USUARIO</td>
             </tr>
         </tbody>
     </table>

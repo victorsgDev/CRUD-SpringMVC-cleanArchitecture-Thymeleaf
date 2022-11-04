@@ -6,30 +6,32 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 //@RequestMapping()
 public class LibroController {
 
     private final LibroService libroService;
+    private final Libro libro;
     private String table = "LIBRO";
 
     //DI libroService
-    public LibroController(LibroService libroService) {
+    public LibroController(LibroService libroService, Libro libro) {
         this.libroService = libroService;
+        this.libro = libro;
     }
 
     @GetMapping("/libros")
     public String listAll(Model model) {
+        List<Libro> listLibros = new ArrayList<>();
         var listObject = libroService.listAll(table);
-        List<Libro> res= listObject.stream()
-                .map(Libro.class::cast)
-                .collect(Collectors.toList());
+        var rs = listObject.stream().map(List.class::cast);
+        rs.forEach(list -> list.forEach(o -> listLibros.add(Libro.class.cast(o))));
 
         model.addAttribute("libros",
-                res);
+                listLibros);
         return "libros";
     }
 
@@ -38,9 +40,16 @@ public class LibroController {
         return libroService.listById(idLibro);
     }
 
+    @GetMapping("/libros/create")
+    public String newLibro(Model model){
+        model.addAttribute("libro", libro);
+        return "createLibro";
+    }
+
     @PostMapping
-    public Libro save(@RequestBody Libro libro) {
-        return libroService.save(libro);
+    public String save(@ModelAttribute("libro") Libro libro) {
+        libroService.save(libro);
+        return "redirect:/libros";
     }
 
 
