@@ -62,7 +62,6 @@ public class EntityManager implements Repository<Object, Integer> {
             try {
                 rs.beforeFirst();
                 while (rs.next()) {
-                    // TODO REVISAR NEW :
                     Libro libro = new Libro();
 
                     libro.setIdLibro(rs.getInt("idLibro"));
@@ -82,7 +81,6 @@ public class EntityManager implements Repository<Object, Integer> {
             try {
                 rs.beforeFirst();
                 while (rs.next()) {
-                    // TODO REVISAR NEW :
                     User user = new User();
 
                     user.setIdUser(rs.getInt("idUser"));
@@ -156,13 +154,13 @@ public class EntityManager implements Repository<Object, Integer> {
             libro = (Libro) object;
             try {
                 rs.moveToInsertRow();
-                rs.updateInt("idLibro", libro.getIdLibro());
+                rs.updateInt("idLibro", Integer.parseInt("2"+libro.getIdLibro()));
                 rs.updateString("name", libro.getName());
                 rs.updateString("author", libro.getAuthor());
                 rs.updateString("editorial", libro.getEditorial());
                 rs.updateInt("numPages", libro.getNum_pages());
                 rs.updateBoolean("disponible", libro.isDisponible());
-                rs.updateInt("idUser", libro.getIdUser());
+                rs.updateInt("idUser", Integer.parseInt("1"+libro.getIdUser()));
                 rs.insertRow();
 
                 return libro;

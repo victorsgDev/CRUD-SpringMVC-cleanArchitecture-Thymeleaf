@@ -10,8 +10,8 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-        <a class="navbar-brand">Control de Biblioteca</a>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <a class="navbar-brand">Control de Biblioteca</a>
 
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
@@ -20,34 +20,45 @@
             </li>
         </ul>
     </div>
-    </nav>
+</nav>
 
 <div class="container">
     <div class="row">
         <h1>Lista de Libros</h1>
     </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <a th:href="@{/libros/create}" class="btn btn-primary btn-sm mb3">Agregar Libro</a>
+        </div>
+    </div>
+    <br>
     <table class="table table-striped table-bordered">
         <thead class="table-dark">
-            <tr>
-                <th>ID_LIBRO</th>
-                <th>NOMBRE</th>
-                <th>AUTOR</th>
-                <th>EDITORIAL</th>
-                <th>NÚMERO_PÁGINAS</th>
-                <th>¿DISPONIBLE?</th>
-                <th>ID_USUARIO</th>
-            </tr>
+        <tr>
+            <th>ID_LIBRO</th>
+            <th>NOMBRE</th>
+            <th>AUTOR</th>
+            <th>EDITORIAL</th>
+            <th>NÚMERO_PÁGINAS</th>
+            <th>¿DISPONIBLE?</th>
+            <th>ID_USUARIO</th>
+            <th>ACCIONES</th>
+        </tr>
         </thead>
         <tbody>
         <tr th:each=" libro : ${libros}">
-                <td th:text="${libro.idLibro}">ID_LIBRO</td>
-                <td th:text="${libro.name}">NOMBRE</td>
-                <td th:text="${libro.author}">AUTOR</td>
-                <td th:text="${libro.editorial}">EDITORIAL</td>
-                <td th:text="${libro.num_pages}">NÚMERO_PÁGINAS</td>
-                <td th:text="${libro.disponible}">¿DISPONIBLE?</td>
-                <td th:text="${libro.idUser}">ID_USUARIO</td>
-            </tr>
+            <td th:text="${libro.idLibro}">ID_LIBRO</td>
+            <td th:text="${libro.name}">NOMBRE</td>
+            <td th:text="${libro.author}">AUTOR</td>
+            <td th:text="${libro.editorial}">EDITORIAL</td>
+            <td th:text="${libro.num_pages}">NÚMERO_PÁGINAS</td>
+            <td th:text="${libro.disponible}">¿DISPONIBLE?</td>
+            <td th:text="${libro.idUser}">ID_USUARIO</td>
+            <td>
+                <a th:href="@{/libros/editar/{id}(id=${libro.idLibro})}" class="btn btn-info">Editar</a>
+                <a th:href="@{/libros/eliminar/{id}(id=${libro.idLibro})}" class="btn btn-danger">Eliminar</a>
+            </td>
+        </tr>
         </tbody>
     </table>
 </div>

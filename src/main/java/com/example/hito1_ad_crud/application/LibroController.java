@@ -28,7 +28,7 @@ public class LibroController {
         List<Libro> listLibros = new ArrayList<>();
         var listObject = libroService.listAll(table);
         var rs = listObject.stream().map(List.class::cast);
-        rs.forEach(list -> list.forEach(o -> listLibros.add(Libro.class.cast(o))));
+        rs.forEach(list -> list.forEach(o -> listLibros.add((Libro) o)));
 
         model.addAttribute("libros",
                 listLibros);
@@ -43,26 +43,36 @@ public class LibroController {
     @GetMapping("/libros/create")
     public String newLibro(Model model){
         model.addAttribute("libro", libro);
-        return "createLibro";
+        return "create_libro";
     }
 
-    @PostMapping
+    @PostMapping("/libros")
     public String save(@ModelAttribute("libro") Libro libro) {
         libroService.save(libro);
         return "redirect:/libros";
     }
 
-
-    @PutMapping("{id}")
-    public Libro updateById(@PathVariable("id") Integer idLibro, @RequestBody Libro libro) {
-        return (Libro) libroService.updateById(idLibro, libro);
+    @GetMapping("/libros/editar/{id}")
+    public String goToEditLibro(@PathVariable Integer id, Model modelo) {
+        var libro = (Libro) libroService.listById(id);
+        modelo.addAttribute("libro",  libro);
+        return "libro_update";
     }
 
 
-    @DeleteMapping("{id}")
-    public void deleteById(@PathVariable("id") Integer idLibro) {
-        libroService.deleteById(idLibro);
+
+    @PostMapping("/libros/{id}")
+    public String actualizarEstudiante(@PathVariable Integer id, @ModelAttribute("libro") Libro libro) {
+        libroService.updateById(id,libro);
+        return "redirect:/libros";
     }
+
+    @GetMapping("/libros/eliminar/{id}")
+    public String eliminarEstudiante(@PathVariable Integer id) {
+        libroService.deleteById(id);
+        return "redirect:/libros";
+    }
+
 
 
 }

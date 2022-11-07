@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
-  <title>Registro de Libros</title>
+  <title>Editar Libro</title>
   <!-- CSS only -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
@@ -11,12 +10,12 @@
 
 
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-  <a class="navbar-brand" href="#"> Control de Biblioteca</a>
+  <a class="navbar-brand" href="#"> Control de estudiantes</a>
   <!-- Navbar links -->
   <div class="collapse navbar-collapse" id="collapsibleNavbar">
     <ul class="navbar-nav">
       <li class="nav-item"><a class="nav-link"
-                              th:href="@{/libros}">Control de Bibloteca</a></li>
+                              th:href="@{/libros}">Control de estudiantes</a></li>
     </ul>
   </div>
 </nav>
@@ -25,15 +24,10 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
-      <h1 class="text-center">Registro de estudiante</h1>
+      <h1 class="text-center">Edición de estudiante</h1>
       <div class="card-body">
 
-        <form th:action="@{/libros}" th:object="${libro}" method="POST">
-          <div class="form-group">
-            <label>ID del libro : </label>
-            <input type="text" name="idLibro" th:field="*{idLibro}" class="form-control" placeholder="Introduce el ID del libro: " required>
-          </div>
-
+        <form th:action="@{/libros/{id}(id=${libro.idLibro})}" th:object="${libro}" method="POST">
           <div class="form-group">
             <label>Titulo del libro : </label>
             <input type="text" name="name" th:field="*{name}" class="form-control" placeholder="Introduce el titulo del libro : " required>
@@ -58,9 +52,13 @@
             <label>Diponibilidad : </label>
             <input type="text" name="disponible" th:field="*{disponible}" class="form-control" placeholder="¿Libro Disponible? : " required>
           </div>
+          <div class="form-group">
+            <label>ID Usuario : </label>
+            <input type="text" name="idUser" th:field="*{idUser}" class="form-control" placeholder="ID del Usuario : " required>
+          </div>
 
           <div class="box-footer">
-            <button class="btn btn-success">Guardar Libro</button>
+            <button class="btn btn-success">Editar Libro</button>
           </div>
         </form>
 
