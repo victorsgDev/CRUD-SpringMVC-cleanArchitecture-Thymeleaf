@@ -1,13 +1,17 @@
-package com.example.hito1_ad_crud.service;
+package com.victorsgdev.service;
 
-import com.example.hito1_ad_crud.domain.Libro;
+import com.victorsgdev.domain.Libro;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.util.Collections;
 import java.util.List;
 
 @Service
-public class LibroService implements com.example.hito1_ad_crud.service.Service {
+public class LibroService implements com.victorsgdev.service.Service {
 
     // DI LibroRepository
     private final LibroRepository libroRepository;
@@ -42,5 +46,19 @@ public class LibroService implements com.example.hito1_ad_crud.service.Service {
         libroRepository.deleteById(idObject);
     }
 
+
+    // CSV:
+    public void exportToCsv(Writer writer, String tabla) {
+
+        List<Libro> libros = libroRepository.listAll(tabla);
+        try (CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT)) {
+            for (Libro libro : libros) {
+                csvPrinter.printRecord(libro.getIdLibro(),libro.getName(),libro.getAuthor(),libro.getEditorial(),
+                        libro.getNum_pages(),libro.isDisponible(),libro.getIdUser());
+            }
+        } catch (IOException e) {
+            System.out.println("Error al exportar al csv: "+e);
+        }
+    }
 
 }

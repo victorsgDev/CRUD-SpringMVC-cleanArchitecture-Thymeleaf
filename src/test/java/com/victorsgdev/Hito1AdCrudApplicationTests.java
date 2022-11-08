@@ -1,4 +1,4 @@
-package com.example.hito1_ad_crud;
+package com.victorsgdev;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

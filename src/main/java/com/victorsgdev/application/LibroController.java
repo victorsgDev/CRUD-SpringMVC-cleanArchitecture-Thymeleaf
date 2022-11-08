@@ -1,17 +1,16 @@
-package com.example.hito1_ad_crud.application;
+package com.victorsgdev.application;
 
-import com.example.hito1_ad_crud.domain.Libro;
-import com.example.hito1_ad_crud.service.LibroService;
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.CsvToBeanBuilder;
+import com.victorsgdev.domain.Libro;
+import com.victorsgdev.service.LibroService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,46 +79,15 @@ public class LibroController {
         return "redirect:/libros";
     }
 
-    //  TODO CSV:
-    @GetMapping("/libros/csv")
-    public String index() {
-        return "libros_csv";
-    }
-
-    @PostMapping("/upload-csv-file")
-    public String uploadCSVFile(@RequestParam("file") MultipartFile file, Model model) {
-
-        // validate file
-        if (file.isEmpty()) {
-            model.addAttribute("message", "Please select a CSV file to upload.");
-            model.addAttribute("status", false);
-        } else {
-
-            // parse CSV file to create a list of `User` objects
-            try (Reader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
-
-                // create csv bean reader
-                CsvToBean<Libro> csvToBean = new CsvToBeanBuilder(reader)
-                        .withType(Libro.class)
-                        .withIgnoreLeadingWhiteSpace(true)
-                        .build();
-
-                // convert `CsvToBean` object to list of users
-                List<Libro> libros = csvToBean.parse();
-
-                // TODO: save users in DB?
-
-                // save users list on model
-                model.addAttribute("libros", libros);
-                model.addAttribute("status", true);
-
-            } catch (Exception ex) {
-                model.addAttribute("message", "An error occurred while processing the CSV file.");
-                model.addAttribute("status", false);
-            }
+    @GetMapping("/libros/to-csv")
+    public void getAllLibrosInCsv(HttpServletResponse servletResponse) {
+        servletResponse.setContentType("text/csv");
+        servletResponse.addHeader("Content-Disposition","attachment; filename=\"libros.csv\"");
+        try {
+            libroService.exportToCsv(servletResponse.getWriter(),table);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-
-        return "file-upload-status";
     }
 
 

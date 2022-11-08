@@ -1,8 +1,7 @@
-package com.example.hito1_ad_crud.service;
+package com.victorsgdev.service;
 
-import com.example.hito1_ad_crud.domain.Libro;
-import com.example.hito1_ad_crud.domain.User;
-import com.example.hito1_ad_crud.infrastructure.EntityManager;
+import com.victorsgdev.domain.User;
+import com.victorsgdev.infrastructure.EntityManager;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -56,4 +55,6 @@ public class UserRepository implements Repository<User, Integer> {
     public void connect() {
         entityManager.connect(cadena_conexion, table);
     }
+
+
 }

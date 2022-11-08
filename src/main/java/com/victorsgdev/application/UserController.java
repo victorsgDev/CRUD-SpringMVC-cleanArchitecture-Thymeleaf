@@ -1,12 +1,14 @@
-package com.example.hito1_ad_crud.application;
+package com.victorsgdev.application;
 
 
-import com.example.hito1_ad_crud.domain.User;
-import com.example.hito1_ad_crud.service.UserService;
+import com.victorsgdev.domain.User;
+import com.victorsgdev.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,6 +73,17 @@ public class UserController {
     public String deleteUser(@PathVariable Integer id) {
         userService.deleteById(id);
         return "redirect:/users";
+    }
+
+    @GetMapping("/users/to-csv")
+    public void getAllUsersInCsv(HttpServletResponse servletResponse) {
+        servletResponse.setContentType("text/csv");
+        servletResponse.addHeader("Content-Disposition","attachment; filename=\"users.csv\"");
+        try {
+            userService.exportToCsv(servletResponse.getWriter(),table);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

@@ -1,4 +1,4 @@
-package com.example.hito1_ad_crud;
+package com.victorsgdev;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package com.example.hito1_ad_crud.service;
+package com.victorsgdev.service;
 
 import java.util.List;
 

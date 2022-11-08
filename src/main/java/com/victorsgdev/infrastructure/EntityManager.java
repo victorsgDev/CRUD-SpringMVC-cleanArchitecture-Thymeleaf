@@ -1,8 +1,8 @@
-package com.example.hito1_ad_crud.infrastructure;
+package com.victorsgdev.infrastructure;
 
-import com.example.hito1_ad_crud.domain.Libro;
-import com.example.hito1_ad_crud.domain.User;
-import com.example.hito1_ad_crud.service.Repository;
+import com.victorsgdev.domain.Libro;
+import com.victorsgdev.domain.User;
+import com.victorsgdev.service.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -1,4 +1,4 @@
-package com.example.hito1_ad_crud.service;
+package com.victorsgdev.service;
 
 import java.util.List;
 
@@ -13,5 +13,6 @@ public interface Service {
     void deleteById(Integer idObject);
 
     Object listById(Integer idObject);
+
 
 }

@@ -1,7 +1,7 @@
-package com.example.hito1_ad_crud.service;
+package com.victorsgdev.service;
 
-import com.example.hito1_ad_crud.domain.Libro;
-import com.example.hito1_ad_crud.infrastructure.EntityManager;
+import com.victorsgdev.domain.Libro;
+import com.victorsgdev.infrastructure.EntityManager;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,10 +12,11 @@ public class LibroRepository implements Repository<Libro, Integer> {
 
     // DI EntityManager
     private final EntityManager entityManager;
-    //TODO CONEXIÓN A MYSQL
-    // private String cadena_conexion = "jdbc:mysql://localhost:3306/BIBLIOTECA";
-    //TODO CONEXIÓN A POSTGRESQL
-     private String cadena_conexion = "jdbc:postgresql://localhost:5432/biblioteca";
+
+    // CONEXIÓN A MYSQL
+    //private String cadena_conexion = "jdbc:mysql://localhost:3306/BIBLIOTECA";
+    //CONEXIÓN A POSTGRESQL
+    private String cadena_conexion = "jdbc:postgresql://localhost:5432/biblioteca";
     private String table = "LIBRO";
 
     public LibroRepository(EntityManager entityManager) {
