@@ -2,10 +2,16 @@ package com.example.hito1_ad_crud.application;
 
 import com.example.hito1_ad_crud.domain.Libro;
 import com.example.hito1_ad_crud.service.LibroService;
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.CsvToBeanBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +41,7 @@ public class LibroController {
         return "libros";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/libros/{id}")
     public Object listById(@PathVariable("id") Integer idLibro) {
         return libroService.listById(idLibro);
     }
@@ -62,15 +68,58 @@ public class LibroController {
 
 
     @PostMapping("/libros/{id}")
-    public String actualizarEstudiante(@PathVariable Integer id, @ModelAttribute("libro") Libro libro) {
+    public String updateLibros(@PathVariable Integer id, @ModelAttribute("libro") Libro libro) {
         libroService.updateById(id,libro);
         return "redirect:/libros";
     }
 
+
     @GetMapping("/libros/eliminar/{id}")
-    public String eliminarEstudiante(@PathVariable Integer id) {
+    public String deleteLibro(@PathVariable Integer id) {
         libroService.deleteById(id);
         return "redirect:/libros";
+    }
+
+    //  TODO CSV:
+    @GetMapping("/libros/csv")
+    public String index() {
+        return "libros_csv";
+    }
+
+    @PostMapping("/upload-csv-file")
+    public String uploadCSVFile(@RequestParam("file") MultipartFile file, Model model) {
+
+        // validate file
+        if (file.isEmpty()) {
+            model.addAttribute("message", "Please select a CSV file to upload.");
+            model.addAttribute("status", false);
+        } else {
+
+            // parse CSV file to create a list of `User` objects
+            try (Reader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
+
+                // create csv bean reader
+                CsvToBean<Libro> csvToBean = new CsvToBeanBuilder(reader)
+                        .withType(Libro.class)
+                        .withIgnoreLeadingWhiteSpace(true)
+                        .build();
+
+                // convert `CsvToBean` object to list of users
+                List<Libro> libros = csvToBean.parse();
+
+                // TODO: save users in DB?
+
+                // save users list on model
+                model.addAttribute("libros", libros);
+                model.addAttribute("status", true);
+
+            } catch (Exception ex) {
+                model.addAttribute("message", "An error occurred while processing the CSV file.");
+                model.addAttribute("status", false);
+            }
+        }
+
+        return "file-upload-status";
     }
 
 

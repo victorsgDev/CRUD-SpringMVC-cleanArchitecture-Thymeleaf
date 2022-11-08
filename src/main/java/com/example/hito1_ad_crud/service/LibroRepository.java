@@ -12,7 +12,10 @@ public class LibroRepository implements Repository<Libro, Integer> {
 
     // DI EntityManager
     private final EntityManager entityManager;
-    private String cadena_conexion = "jdbc:mysql://localhost:3306/BIBLIOTECA";
+    //TODO CONEXIÓN A MYSQL
+    // private String cadena_conexion = "jdbc:mysql://localhost:3306/BIBLIOTECA";
+    //TODO CONEXIÓN A POSTGRESQL
+     private String cadena_conexion = "jdbc:postgresql://localhost:5432/biblioteca";
     private String table = "LIBRO";
 
     public LibroRepository(EntityManager entityManager) {
