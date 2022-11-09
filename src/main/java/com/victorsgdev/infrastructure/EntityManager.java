@@ -25,7 +25,6 @@ public class EntityManager implements Repository<Object, Integer> {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection(cadenaConexion, "root", "root");
-            System.out.println("Conectado con exito a la BD");
             return executeQuery(con, table);
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println("Imposible acceder a la base de datos");

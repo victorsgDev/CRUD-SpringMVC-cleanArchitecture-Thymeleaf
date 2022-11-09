@@ -1,5 +1,6 @@
 package com.victorsgdev.domain;
 
+import com.opencsv.bean.CsvBindByName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,9 +13,11 @@ import org.springframework.stereotype.Component;
 @Builder
 @Component
 public class User {
-
+    @CsvBindByName
     private int idUser;
+    @CsvBindByName
     private String name;
+    @CsvBindByName
     private String nif;
 
 }

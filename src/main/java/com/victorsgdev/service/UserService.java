@@ -1,8 +1,7 @@
 package com.victorsgdev.service;
 
 import com.victorsgdev.domain.User;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
+import com.opencsv.CSVWriter;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -43,16 +42,5 @@ public class UserService implements Service{
         return userRepository.listById(idObject);
     }
 
-    // CSV:
-    public void exportToCsv(Writer writer, String tabla) {
 
-        List<User> users = userRepository.listAll(tabla);
-        try (CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT)) {
-            for (User user : users) {
-                csvPrinter.printRecord(user.getIdUser(),user.getName(),user.getNif());
-            }
-        } catch (IOException e) {
-            System.out.println("Error al exportar al csv: "+e);
-        }
-    }
 }

@@ -1,12 +1,8 @@
 package com.victorsgdev.service;
 
 import com.victorsgdev.domain.Libro;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.io.Writer;
 import java.util.Collections;
 import java.util.List;
 
@@ -47,18 +43,10 @@ public class LibroService implements com.victorsgdev.service.Service {
     }
 
 
-    // CSV:
-    public void exportToCsv(Writer writer, String tabla) {
+    public void importFromCsv(String tabla) {
 
-        List<Libro> libros = libroRepository.listAll(tabla);
-        try (CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT)) {
-            for (Libro libro : libros) {
-                csvPrinter.printRecord(libro.getIdLibro(),libro.getName(),libro.getAuthor(),libro.getEditorial(),
-                        libro.getNum_pages(),libro.isDisponible(),libro.getIdUser());
-            }
-        } catch (IOException e) {
-            System.out.println("Error al exportar al csv: "+e);
-        }
     }
 
 }
+
+
