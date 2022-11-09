@@ -24,6 +24,7 @@ public class EntityManager implements Repository<Object, Integer> {
     public ResultSet connect(String cadenaConexion, String table) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
+            //Class.forName("org.postgresql.Driver");
             con = DriverManager.getConnection(cadenaConexion, "root", "root");
             return executeQuery(con, table);
         } catch (SQLException | ClassNotFoundException e) {

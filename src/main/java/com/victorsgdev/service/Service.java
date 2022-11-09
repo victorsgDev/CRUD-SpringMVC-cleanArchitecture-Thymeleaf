@@ -14,5 +14,4 @@ public interface Service {
 
     Object listById(Integer idObject);
 
-
 }
