@@ -170,7 +170,7 @@ public class EntityManager implements Repository<Object, Integer> {
             try {
                 user = (User) object;
                 rs.moveToInsertRow();
-                rs.updateInt("idUser", libro.getIdUser());
+                rs.updateInt("idUser", user.getIdUser());
                 rs.updateString("name", user.getName());
                 rs.updateString("nif", user.getNif());
                 rs.insertRow();

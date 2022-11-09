@@ -1,10 +1,7 @@
 package com.victorsgdev.service;
 
 import com.victorsgdev.domain.User;
-import com.opencsv.CSVWriter;
 
-import java.io.IOException;
-import java.io.Writer;
 import java.util.Collections;
 import java.util.List;
 

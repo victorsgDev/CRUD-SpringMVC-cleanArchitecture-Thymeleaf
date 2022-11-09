@@ -21,6 +21,12 @@
       <li class="nav-item">
         <a class="nav-link" th:href="@{/users}">Control de Usuarios</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/libros/to-csv}">CSV Libros</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/users/to-csv}">CSV Usuarios</a>
+      </li>
     </ul>
   </div>
 </nav>
@@ -45,9 +51,9 @@
     </thead>
     <tbody>
     <tr th:each=" user : ${users}">
-      <td th:text="${user.idUser}">ID_LIBRO</td>
+      <td th:text="${user.idUser}">ID_USUARIO</td>
       <td th:text="${user.name}">NOMBRE</td>
-      <td th:text="${user.nif}">AUTOR</td>
+      <td th:text="${user.nif}">NIF</td>
       <td>
         <a th:href="@{/users/editar/{id}(id=${user.idUser})}" class="btn btn-info">Editar</a>
         <a th:href="@{/users/eliminar/{id}(id=${user.idUser})}" class="btn btn-danger">Eliminar</a>

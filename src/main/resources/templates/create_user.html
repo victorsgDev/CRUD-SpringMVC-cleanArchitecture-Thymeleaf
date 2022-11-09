@@ -33,7 +33,7 @@
         <form th:action="@{/users}" th:object="${user}" method="POST">
           <div class="form-group">
             <label>ID del Usuario : </label>
-            <input type="text" name="idLibro" th:field="*{idUser}" class="form-control" placeholder="El ID debe empezar por 1: " required>
+            <input type="text" name="idUser" th:field="*{idUser}" class="form-control" placeholder="Introduce el ID del Usuario: " required>
           </div>
 
           <div class="form-group">
@@ -43,7 +43,7 @@
 
           <div class="form-group">
             <label>NIF del Usuario : </label>
-            <input type="text" name="author" th:field="*{nif}" class="form-control" placeholder="Introce NIF : " required>
+            <input type="text" name="nif" th:field="*{nif}" class="form-control" placeholder="Introce NIF : " required>
           </div>
 
           <div class="box-footer">
