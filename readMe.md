@@ -10,6 +10,6 @@
 - JDBC
 - Programación funcional, Stream API
 - Lombok
-- Apache Commons CSV
+- OpenCSV
 
 
